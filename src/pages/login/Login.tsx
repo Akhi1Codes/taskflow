@@ -38,7 +38,7 @@ const Login: React.FC = () => {
         <br />
         seamlessly with our comprehensive task management application.
       </p>
-      <button className="w-fit" onClick={handleClick}>
+      <button className="w-fit p-2 bg-black text-white" onClick={handleClick}>
         Continue with Google
       </button>
     </div>
