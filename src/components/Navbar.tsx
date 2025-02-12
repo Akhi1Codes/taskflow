@@ -14,12 +14,15 @@ const Navbar: React.FC = () => {
       <div>
         {user ? (
           <div>
-            {user.photoURL && (
-              <img
-                src="https://lh3.googleusercontent.com/a/ACg8ocJAHTJxV9iSYQGeOEaBRHfVEsNJLsC7DzcOXKEIBdRKt9OzgkTH=s96-c"
-                alt="User Avatar"
-                className="rounded-full h-8 w-8"
-              />
+            {user && (
+              <div className="flex items-center">
+                <img
+                  src={user.photoURL ?? undefined}
+                  alt="User Avatar"
+                  className="rounded-full h-8 w-8"
+                />
+                <p className="px-1">{user.displayName}</p>
+              </div>
             )}
           </div>
         ) : null}

@@ -14,13 +14,12 @@ const Login: React.FC = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
       const serializableUser = {
+        uid: user.uid,
         displayName: user.displayName,
         email: user.email,
-        photoURL: user.photoURL,
+        photoURL: user.photoURL ?? undefined,
       } as User;
-
       navigate("/dashboard");
       dispatch(setUser({ user: serializableUser }));
     } catch (error) {
@@ -32,7 +31,7 @@ const Login: React.FC = () => {
     <div className="px-12 flex flex-col justify-center h-[100vh]">
       <div className="flex items-center">
         <ClipboardDocumentListIcon className="h-12 w-12 text-purple-900" />
-        <p className="font-extrabold text-3xl">TaskFlow</p>
+        <p className="font-extrabold text-3xl text-purple-900">TaskFlow</p>
       </div>
       <p className="font-medium text-sm py-2">
         Enhance your productivity and monitor your progress
