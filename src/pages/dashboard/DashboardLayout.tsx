@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar";
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="p-2">
+    <div className="md:p-4">
       <Navbar />
       <Outlet />
     </div>
