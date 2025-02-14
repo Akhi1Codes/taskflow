@@ -52,11 +52,11 @@ const Navbar: React.FC = () => {
       </div>
       <div className="flex justify-between py-1">
         <div className="flex gap-4 py-2">
-          <div className="flex items-center">
+          <div className="flex items-center gap-0.5">
             <QueueListIcon className="h-4 w-4" />
             <p>List</p>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-0.5">
             <InboxStackIcon className="h-4 w-4" />
             <p>Board</p>
           </div>
