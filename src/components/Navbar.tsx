@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
         </div>
         {toggle && (
           <button
-            className="flex items-center gap-1 p-1 border-1 border-black"
+            className="flex items-center gap-1 px-1 border-1 border-black rounded-xl"
             onClick={() => Logout()}
           >
             <ArrowLeftStartOnRectangleIcon className="h-4 w-4" />
