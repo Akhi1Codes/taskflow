@@ -1,20 +1,22 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-const Filter = () => {
+const Filter: React.FC = () => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between mb-6">
       <div>
-        <label htmlFor="filter">Filter by : </label>
+        <label htmlFor="filter" className="text-sm text-black/80">
+          Filter by :{" "}
+        </label>
         <select
           name="filter"
-          className="text-sm  border-1 border-black rounded-3xl p-1 mx-1"
+          className="text-sm  border-1 border-black/20 rounded-3xl p-1 mx-1"
           defaultValue={"Category"}
         >
           <option disabled>Category</option>
         </select>
         <select
           name="filter"
-          className="text-sm  border-1 border-black rounded-3xl p-1 mx-1"
+          className="text-sm  border-1 border-black/20 rounded-3xl p-1 mx-1"
           defaultValue={"Due Date"}
         >
           <option disabled>Due Date</option>

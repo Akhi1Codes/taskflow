@@ -8,14 +8,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { auth } from "../firebase/config";
 import { signOut } from "firebase/auth";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 const Navbar: React.FC = () => {
   const user = useSelector((state: RootState) => state.authSlice.user);
   const [toggle, setToggle] = useState<boolean>(false);
-
   const navigate = useNavigate();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   const Logout = async (): Promise<void> => {
     try {
       await signOut(auth);
@@ -25,6 +26,20 @@ const Navbar: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setToggle(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [buttonRef]);
   return (
     <>
       <div className="flex justify-between ga">
@@ -40,7 +55,7 @@ const Navbar: React.FC = () => {
                   <img
                     src={user.photoURL ?? undefined}
                     alt="User Avatar"
-                    className="rounded-full h-8 w-8"
+                    className="rounded-full h-8 w-8 cursor-pointer"
                     onClick={() => setToggle(!toggle)}
                   />
                   <p className="px-1">{user.displayName}</p>
@@ -54,15 +69,16 @@ const Navbar: React.FC = () => {
         <div className="flex gap-4 py-2">
           <div className="flex items-center gap-0.5">
             <QueueListIcon className="h-4 w-4" />
-            <p>List</p>
+            <p className="font-semibold">List</p>
           </div>
           <div className="flex items-center gap-0.5">
             <InboxStackIcon className="h-4 w-4" />
-            <p>Board</p>
+            <p className="font-semibold">Board</p>
           </div>
         </div>
         {toggle && (
           <button
+            ref={buttonRef}
             className="flex items-center gap-1 px-1 border-1 border-black rounded-xl"
             onClick={() => Logout()}
           >
