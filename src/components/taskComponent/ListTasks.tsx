@@ -1,22 +1,13 @@
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import AddTask from "./AddTask";
 import { useState } from "react";
 
 interface TaskProps {
   title: string;
   bgColor: string;
   taskCount: number;
-  showAddTask?: boolean;
-  children?: React.ReactNode;
 }
 
-const Task: React.FC<TaskProps> = ({
-  title,
-  bgColor,
-  taskCount,
-  showAddTask = true,
-  children,
-}) => {
+const Task: React.FC<TaskProps> = ({ title, bgColor, taskCount }) => {
   const [toggle, setToggle] = useState<boolean>(true);
 
   return (
@@ -39,7 +30,6 @@ const Task: React.FC<TaskProps> = ({
       </div>
       {toggle && (
         <div className="bg-gray-100 rounded-b-lg">
-          {showAddTask ? <AddTask /> : children}
           <div className="flex justify-center items-center h-40">
             <p className="text-sm select-none">No Task in {title}</p>
           </div>

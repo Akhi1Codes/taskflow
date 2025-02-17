@@ -5,7 +5,7 @@ const Filter: React.FC = () => {
     <div className="flex justify-between mb-6">
       <div>
         <label htmlFor="filter" className="text-sm text-black/80">
-          Filter by :{" "}
+          Filter by :
         </label>
         <select
           name="filter"

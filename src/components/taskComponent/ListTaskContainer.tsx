@@ -1,4 +1,4 @@
-import Task from "./Task";
+import Task from "./ListTasks";
 const TaskContainer: React.FC = () => {
   return (
     <>
@@ -7,14 +7,8 @@ const TaskContainer: React.FC = () => {
         title={"In-Progress"}
         bgColor={"hsl(187, 64%, 88%)"}
         taskCount={0}
-        showAddTask={false}
       />
-      <Task
-        title={"Completed"}
-        bgColor={"hsl(78, 53%, 90%)"}
-        taskCount={0}
-        showAddTask={false}
-      />
+      <Task title={"Completed"} bgColor={"hsl(78, 53%, 90%)"} taskCount={0} />
     </>
   );
 };
