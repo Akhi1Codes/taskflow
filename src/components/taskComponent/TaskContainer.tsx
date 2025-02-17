@@ -1,25 +1,21 @@
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import AddTask from "./AddTask";
-import { useState } from "react";
-
+import Task from "./Task";
 const TaskContainer: React.FC = () => {
-  const [toggle, setToggle] = useState<boolean>(false);
-
   return (
-    <div>
-      <div
-        className="flex justify-between items-center font-bold bg-purple-200 py-2 px-3 rounded-tl-lg rounded-tr-lg cursor-pointer"
-        onClick={() => setToggle(!toggle)}
-      >
-        <p>Todo(1)</p>
-        {toggle ? (
-          <ChevronDownIcon className="size-4 stroke-3" />
-        ) : (
-          <ChevronUpIcon className="size-4 stroke-3" />
-        )}
-      </div>
-      {toggle && <AddTask />}
-    </div>
+    <>
+      <Task title={"Todo"} bgColor={"hsl(320, 100%, 90%)"} taskCount={2} />
+      <Task
+        title={"In-Progress"}
+        bgColor={"hsl(187, 64%, 88%)"}
+        taskCount={0}
+        showAddTask={false}
+      />
+      <Task
+        title={"Completed"}
+        bgColor={"hsl(78, 53%, 90%)"}
+        taskCount={0}
+        showAddTask={false}
+      />
+    </>
   );
 };
 
