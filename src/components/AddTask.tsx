@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { addTask } from "../redux/dataSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
 
 interface AddTaskProps {
   onClose: () => void;
 }
 
-interface TaskData {
+export interface TaskData {
+  id?: string;
   title: string;
   description: string;
   category: "Work" | "Personal";
@@ -13,6 +17,7 @@ interface TaskData {
 }
 
 const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const today = new Date();
   const todayFormatted = today.toISOString().split("T")[0];
 
@@ -41,7 +46,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
       return;
     }
 
-    console.log(taskData);
+    dispatch(addTask(taskData));
     onClose();
   };
 
