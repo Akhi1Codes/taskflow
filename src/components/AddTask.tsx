@@ -7,9 +7,9 @@ interface AddTaskProps {
 interface TaskData {
   title: string;
   description: string;
-  category: string;
+  category: "Work" | "Personal";
   dueDate: string;
-  status: string;
+  status: "To-Do" | "In-Progress" | "Completed";
 }
 
 const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
@@ -19,9 +19,9 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
   const [taskData, setTaskData] = useState<TaskData>({
     title: "",
     description: "",
-    category: "Category",
+    category: "Work",
     dueDate: todayFormatted,
-    status: "Status",
+    status: "To-Do",
   });
 
   const handleChange = (
@@ -30,21 +30,18 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
     >
   ) => {
     const { name, value } = e.target;
-    setTaskData({ ...taskData, [name]: value });
+    setTaskData({ ...taskData, [name]: value } as TaskData);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      taskData.title.trim() === "" ||
-      taskData.description.trim() === "" ||
-      taskData.category === "Category" ||
-      taskData.status === "Status"
-    ) {
+    if (taskData.title.trim() === "" || taskData.description.trim() === "") {
       alert("Please fill in all required fields.");
       return;
     }
+
+    console.log(taskData);
     onClose();
   };
 
@@ -79,9 +76,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
                   value={taskData.category}
                   onChange={handleChange}
                 >
-                  <option disabled>Category</option>
-                  <option>Work</option>
-                  <option>Personal</option>
+                  <option value="Work">Work</option>
+                  <option value="Personal">Personal</option>
                 </select>
               </div>
               <div className="w-full sm:w-1/3">
@@ -103,10 +99,9 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
                   value={taskData.status}
                   onChange={handleChange}
                 >
-                  <option disabled>Status</option>
-                  <option>To-Do</option>
-                  <option>In-Progress</option>
-                  <option>Completed</option>
+                  <option value="To-Do">To-Do</option>
+                  <option value="In-Progress">In-Progress</option>
+                  <option value="Completed">Completed</option>
                 </select>
               </div>
             </div>
