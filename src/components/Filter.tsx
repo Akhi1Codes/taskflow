@@ -1,6 +1,10 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
+import AddTask from "./AddTask";
 
 const Filter: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="flex justify-between mb-6">
       <div>
@@ -33,9 +37,13 @@ const Filter: React.FC = () => {
             <MagnifyingGlassIcon className="h-5 w-5 absolute" />
           </div>
         </div>
-        <button className="text-white bg-purple-900 rounded-full py-1 px-4">
+        <button
+          className="text-white bg-purple-900 rounded-full py-1 px-4"
+          onClick={() => setIsModalOpen(true)}
+        >
           Add Task
         </button>
+        {isModalOpen && <AddTask onClose={() => setIsModalOpen(false)} />}
       </div>
     </div>
   );
