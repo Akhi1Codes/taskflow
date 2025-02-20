@@ -18,13 +18,6 @@ const Filter: React.FC = () => {
         >
           <option disabled>Category</option>
         </select>
-        <select
-          name="filter"
-          className="text-sm  border-1 border-black/20 rounded-3xl p-1 mx-1"
-          defaultValue={"Due Date"}
-        >
-          <option disabled>Due Date</option>
-        </select>
       </div>
       <div className="flex gap-1.5">
         <div className="relative">

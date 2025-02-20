@@ -51,7 +51,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-gray-500/50 flex justify-center items-center">
+    <div className="fixed top-0 left-0 w-full h-full bg-gray-500/50 flex justify-center items-center z-2">
       <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-md">
         <h2 className="text-lg font-semibold mb-4">Add New Task</h2>
         <form onSubmit={handleSubmit}>

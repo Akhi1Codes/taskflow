@@ -38,6 +38,7 @@ const TaskContainer: React.FC = () => {
         bgColor={"hsl(78, 53%, 90%)"}
         taskCount={categorizedTasks["Completed"].length}
         tasks={categorizedTasks["Completed"]}
+        isCompleted={true}
       />
     </>
   );

@@ -11,9 +11,16 @@ interface TaskProps {
   title: string;
   bgColor: string;
   taskCount: number;
+  isCompleted?: boolean;
 }
 
-const Task: React.FC<TaskProps> = ({ title, bgColor, taskCount, tasks }) => {
+const Task: React.FC<TaskProps> = ({
+  title,
+  bgColor,
+  taskCount,
+  tasks,
+  isCompleted,
+}) => {
   const [toggle, setToggle] = useState<boolean>(true);
   const [taskStatusToggle, setTaskStatusToggle] = useState<
     Record<string, boolean>
@@ -52,7 +59,9 @@ const Task: React.FC<TaskProps> = ({ title, bgColor, taskCount, tasks }) => {
         className={`flex justify-between items-center font-bold py-2 px-3 ${
           !toggle ? "rounded-lg" : "rounded-tl-lg rounded-tr-lg"
         } cursor-pointer`}
-        style={{ backgroundColor: bgColor }}
+        style={{
+          backgroundColor: bgColor,
+        }}
         onClick={() => setToggle(!toggle)}
       >
         <p className="select-none">
@@ -70,9 +79,17 @@ const Task: React.FC<TaskProps> = ({ title, bgColor, taskCount, tasks }) => {
             <ul>
               {tasks.map((task) => (
                 <li key={task.id} className="py-1">
-                  <div className="grid grid-cols-10 grid-rows-1 border-b-2 border-black/5 p-1 font-semibold items-center">
+                  <div
+                    className={`grid grid-cols-10 grid-rows-1 border-b-2 border-black/5 p-1 font-semibold items-center  ${
+                      isCompleted && "line-through"
+                    }`}
+                  >
                     <div className="col-span-3 flex items-center gap-1.5">
-                      <CheckCircleIcon className="size-5 text-gray-400" />
+                      <CheckCircleIcon
+                        className={`size-5 text-gray-400 ${
+                          isCompleted && "text-green-700"
+                        }`}
+                      />
                       <p>{task.title}</p>
                     </div>
                     <p className="col-span-2">{task.dueDate}</p>
@@ -84,7 +101,7 @@ const Task: React.FC<TaskProps> = ({ title, bgColor, taskCount, tasks }) => {
                         {task.status}
                       </p>
                       {taskStatusToggle[task.id as string] && (
-                        <div className="absolute bg-white shadow-lg p-2 rounded z-10">
+                        <div className="absolute bg-white shadow-lg p-2 rounded z-1">
                           <p
                             className="cursor-pointer"
                             onClick={() => handleStatusChange(task.id, "To-Do")}
