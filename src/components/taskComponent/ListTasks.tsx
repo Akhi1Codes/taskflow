@@ -2,6 +2,9 @@ import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { TaskData } from "../AddTask";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { updateTask } from "../../redux/dataSlice";
 
 interface TaskProps {
   tasks: TaskData[];
@@ -12,6 +15,36 @@ interface TaskProps {
 
 const Task: React.FC<TaskProps> = ({ title, bgColor, taskCount, tasks }) => {
   const [toggle, setToggle] = useState<boolean>(true);
+  const [taskStatusToggle, setTaskStatusToggle] = useState<
+    Record<string, boolean>
+  >({});
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleTaskStatusToggle = (taskId: string | undefined) => {
+    if (taskId) {
+      setTaskStatusToggle((prev) => ({
+        ...prev,
+        [taskId]: !prev[taskId],
+      }));
+    }
+  };
+
+  const handleStatusChange = (
+    taskId: string | undefined,
+    newStatus: "To-Do" | "In-Progress" | "Completed"
+  ) => {
+    if (taskId) {
+      const updatedTask = tasks.find((task) => task.id === taskId);
+      if (updatedTask) {
+        const updatedTaskData = { ...updatedTask, status: newStatus };
+        dispatch(updateTask(updatedTaskData));
+        setTaskStatusToggle((prev) => ({
+          ...prev,
+          [taskId]: false,
+        }));
+      }
+    }
+  };
 
   return (
     <div className="mb-8">
@@ -43,9 +76,40 @@ const Task: React.FC<TaskProps> = ({ title, bgColor, taskCount, tasks }) => {
                       <p>{task.title}</p>
                     </div>
                     <p className="col-span-2">{task.dueDate}</p>
-                    <p className="col-span-2 bg-gray-300 w-fit px-2 py-1 rounded">
-                      {task.status}
-                    </p>
+                    <div className="relative col-span-2">
+                      <p
+                        className="bg-gray-300 w-fit px-2 py-1 rounded cursor-pointer"
+                        onClick={() => handleTaskStatusToggle(task.id)}
+                      >
+                        {task.status}
+                      </p>
+                      {taskStatusToggle[task.id as string] && (
+                        <div className="absolute bg-white shadow-lg p-2 rounded z-10">
+                          <p
+                            className="cursor-pointer"
+                            onClick={() => handleStatusChange(task.id, "To-Do")}
+                          >
+                            To-Do
+                          </p>
+                          <p
+                            className="cursor-pointer"
+                            onClick={() =>
+                              handleStatusChange(task.id, "In-Progress")
+                            }
+                          >
+                            In-Progress
+                          </p>
+                          <p
+                            className="cursor-pointer"
+                            onClick={() =>
+                              handleStatusChange(task.id, "Completed")
+                            }
+                          >
+                            Completed
+                          </p>
+                        </div>
+                      )}
+                    </div>
                     <p className="col-span-3">{task.category}</p>
                   </div>
                 </li>
