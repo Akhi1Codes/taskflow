@@ -1,4 +1,4 @@
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronUpIcon, ChevronDownIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { TaskData } from "../AddTask";
@@ -25,11 +25,23 @@ const Task: React.FC<TaskProps> = ({
   const [taskStatusToggle, setTaskStatusToggle] = useState<
     Record<string, boolean>
   >({});
+  const [taskOptionToggle, settaskOptionToggle] = useState<
+    Record<string, boolean>
+  >({});
   const dispatch = useDispatch<AppDispatch>();
 
   const handleTaskStatusToggle = (taskId: string | undefined) => {
     if (taskId) {
       setTaskStatusToggle((prev) => ({
+        ...prev,
+        [taskId]: !prev[taskId],
+      }));
+    }
+  };
+
+  const handleOptionsToggle = (taskId: string | undefined) => {
+    if (taskId) {
+      settaskOptionToggle((prev) => ({
         ...prev,
         [taskId]: !prev[taskId],
       }));
@@ -56,9 +68,8 @@ const Task: React.FC<TaskProps> = ({
   return (
     <div className="mb-8">
       <div
-        className={`flex justify-between items-center font-bold py-2 px-3 ${
-          !toggle ? "rounded-lg" : "rounded-tl-lg rounded-tr-lg"
-        } cursor-pointer`}
+        className={`flex justify-between items-center font-bold py-2 px-3 ${!toggle ? "rounded-lg" : "rounded-tl-lg rounded-tr-lg"
+          } cursor-pointer`}
         style={{
           backgroundColor: bgColor,
         }}
@@ -80,15 +91,13 @@ const Task: React.FC<TaskProps> = ({
               {tasks.map((task) => (
                 <li key={task.id} className="py-1">
                   <div
-                    className={`grid grid-cols-10 grid-rows-1 border-b-2 border-black/5 p-1 font-semibold items-center  ${
-                      isCompleted && "line-through"
-                    }`}
+                    className={`grid grid-cols-10 grid-rows-1 border-b-2 border-black/5 p-1 font-semibold items-center  ${isCompleted && "line-through"
+                      }`}
                   >
                     <div className="col-span-3 flex items-center gap-1.5">
                       <CheckCircleIcon
-                        className={`size-5 text-gray-400 ${
-                          isCompleted && "text-green-700"
-                        }`}
+                        className={`size-5 text-gray-400 ${isCompleted && "text-green-700"
+                          }`}
                       />
                       <p>{task.title}</p>
                     </div>
@@ -127,7 +136,26 @@ const Task: React.FC<TaskProps> = ({
                         </div>
                       )}
                     </div>
-                    <p className="col-span-3">{task.category}</p>
+                    <div className="flex justify-between col-span-3">
+                      <p>{task.category}</p>
+                      <div onClick={() => handleOptionsToggle(task.id)} className="relative"  >
+                        <EllipsisHorizontalIcon className="size-5" />
+                        {taskOptionToggle[task.id as string] && (
+                          <div className="absolute bg-white shadow-lg p-2 rounded z-1 right-0">
+                            <p
+                              className="cursor-pointer"
+                            >
+                              Edit
+                            </p>
+                            <p
+                              className="cursor-pointer text-red-600"
+                            >
+                              Delete
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </li>
               ))}
@@ -138,8 +166,9 @@ const Task: React.FC<TaskProps> = ({
             </div>
           )}
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 
